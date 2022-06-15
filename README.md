@@ -85,6 +85,16 @@ The following is the list of packages needed to test and run this project.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+### Commands for command line
+
+    < command > [< argument >]
+
+    < start > <date>            To filter by start date
+
+    < end > <date>              To filter by end start 
+
+    < help >                    Shows command's
+
 <!-- LICENSE -->
 ## License
 
@@ -100,12 +110,6 @@ Project Link: [https://github.com/smzimelaJHB/graph](https://github.com/smzimela
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
 
 * [Choose an Open Source License](https://choosealicense.com)
 * [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
