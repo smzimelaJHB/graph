@@ -4,7 +4,6 @@
 -->
 
 <!-- PROJECT SHIELDS -->
-[![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
@@ -85,6 +84,11 @@ The following is the list of packages needed to test and run this project.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+## Testing
+  ```
+    python3 test_api.py
+    python3 test_graph.py
+  ```
 ### Commands for command line
 
     < command > [< argument >]
@@ -110,21 +114,10 @@ Project Link: [https://github.com/smzimelaJHB/graph](https://github.com/smzimela
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 
 [linkedin-url]: https://www.linkedin.com/in/siyabonga-mzimela-237507b6/

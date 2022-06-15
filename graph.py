@@ -3,18 +3,7 @@ from termcolor import colored
 import requests
 import sys
 
-from project.constants import BASE_URL
-
-
-
-data={
-    "01-01-2022":300,"02-01-2022":300,"03-01-2022":700,"04-01-2022":1300,
-    "05-01-2022":2000,"06-01-2022":3000,"07-01-2022":3500,
-    "08-01-2022":4000,"09-01-2022":4500,"10-01-2022":5000,
-    "11-01-2022":20000,"12-01-2022":35000,"13-01-2022":46000,
-    "14-01-2022":70000,"15-01-2022":90000,"16-01-2022":90,"19-01-2022":950,
-    "01-02-2022":950,"28-09-2018":950,#NB test for year position tis shifting
-    }
+BASE_URL = 'http://sam-user-activity.eu-west-1.elasticbeanstalk.com/'
 
 class Graph:
     def __init__(this,api_endpoint):
@@ -25,7 +14,11 @@ class Graph:
             this.response={}
 
     def help(self):
-        print('Supported commands: ')
+        print("""Supported commands: 
+                    start <date>
+                    end <date>
+                    help
+              """)
         return False,''
     
     def is_integer(self,n):
@@ -35,6 +28,7 @@ class Graph:
             return False
         
     def is_date(self,api_dates,my_date):
+        # check if date is available in the api
         api_dates.sort(key=lambda date:datetime.strptime(date, "%d-%m-%Y"))
         if(my_date in api_dates):
             return True
@@ -104,10 +98,12 @@ class Graph:
         return x_data
 
     def draw_y(self,y_values):
+        # adds new line and color to the dates
         y_data=['\n\n'+""+colored(y+"  ",'red',attrs=['bold']) for y in y_values]
         return y_data
 
     def draw_bar(self,bar_size=1):
+        # set color to green for each bar
         return colored(bar_size*'*',"green",'on_green')
     
     def bar_length(self,sorted_x_data):
@@ -168,10 +164,9 @@ class Graph:
         api_dict=self.get_api_info()
         # handle command input
         isSort=self.check_arguments(sys.argv) 
-  
         # Users
         x_axis=self.generate_x_values(list(api_dict.values()))
-
+        
         draw_x=self.draw_x(list(x_axis))
         
         draw_y=self.add_bars_to_y_axis(api_dict,self.bar_length(x_axis),isSort) 

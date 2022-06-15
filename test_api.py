@@ -1,27 +1,33 @@
+import os
 import unittest
+import  requests
 from unittest.mock import Mock, patch
 from unittest import skipIf
 
 from nose.tools import assert_is_not_none, assert_equal,assert_list_equal
 
-from project.services import get_users_data
-from project.constants import SKIP_REAL
-
+SKIP_REAL = os.getenv('SKIP_REAL', False)  
+BASE_URL = 'http://sam-user-activity.eu-west-1.elasticbeanstalk.com/'
 
 class TestUsersAPI(unittest.TestCase):
-    @patch('project.services.requests.get')
+    def get_users_data(self):
+        response = requests.get(BASE_URL)
+        if response.ok:
+            return response
+        else:
+            return None
+        
+    @patch('requests.get')
     def test_getting_users_data(self,mock_get):
         # Configure the mock to return a response with an OK status code.
         mock_get.return_value.ok = True
-
         # Call the service, which will send a request to the server.
-        response = get_users_data()
-
+        response = self.get_users_data()
         # If the request is sent successfully, then I expect a response to be returned.
         assert_is_not_none(response)
         
         
-    @patch('project.services.requests.get')
+    @patch('requests.get')
     def test_getting_users_data_when_response_is_ok(self,mock_get):
         users_data = {'01-01-2022': 300}
         # Configure the mock to return a response with an OK status code. Also, the mock should have           
@@ -29,7 +35,7 @@ class TestUsersAPI(unittest.TestCase):
         mock_get.return_value = Mock(ok=True)
         mock_get.return_value.json.return_value = users_data
         # Call the service, which will send a request to the server.
-        response = get_users_data()
+        response = self.get_users_data()
         # If the request is sent successfully, then I expect a response to be returned.
         assert_equal(response.json(), users_data)
 
@@ -37,10 +43,10 @@ class TestUsersAPI(unittest.TestCase):
     @skipIf(SKIP_REAL, 'Skipping tests that hit the real API server.')
     def test_integration_contract(self):
         # Call the service to hit the actual API.
-        actual = get_users_data()
+        actual = self.get_users_data()
         actual_keys = list(actual.json().keys()).pop()
         # Call the service to hit the mocked API.
-        with patch('project.services.requests.get') as mock_get:
+        with patch('requests.get') as mock_get:
             mock_get.return_value.ok = True
             mock_get.return_value.json.return_value = {
                 "01-01-2022":300,"02-01-2022":500,"03-01-2022":700,
@@ -49,8 +55,11 @@ class TestUsersAPI(unittest.TestCase):
                 "10-01-2022":5000,"11-01-2022":20000,"12-01-2022":35000,
                 "13-01-2022":46000,"14-01-2022":70000,"15-01-2022":90000
                 }
-            mocked = get_users_data()
+            mocked = self.get_users_data()
             mocked_keys = list(mocked.json().keys()).pop()
         # An object from the actual API and an object from the mocked API should have
         # the same data structure.
         assert_list_equal(list(actual_keys), list(mocked_keys))
+        
+if __name__ == '__main__':
+     unittest.main()
